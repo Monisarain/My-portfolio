@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Monis Ahmed — Portfolio</title>
+  <meta name="description" content="Colorful animated portfolio template built with HTML, CSS and JavaScript." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1: #ff7eb3;
+      --bg2: #7afcff;
+      --accent: #ffd56b;
+      --card: rgba(255,255,255,0.12);
+      --glass: rgba(255,255,255,0.08);
+      --text: #0f1724;
+      --muted: rgba(15,23,36,0.7);
+      --glass-border: rgba(255,255,255,0.18);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Poppins,system-ui,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));-webkit-font-smoothing:antialiased;color:var(--text)}
+
+    /* Page layout */
+    .container{max-width:1100px;margin:0 auto;padding:36px 20px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#fff6 #fff, rgba(255,255,255,0.08));display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--text);box-shadow:0 8px 30px rgba(0,0,0,0.12)}
+    .brand h1{font-size:20px;margin:0}
+    nav{display:flex;gap:12px;align-items:center}
+    nav a{padding:8px 12px;border-radius:10px;text-decoration:none;color:var(--text);font-weight:600}
+    .cta{background:linear-gradient(90deg,#ffd56b,#ff7eb3);padding:8px 12px;border-radius:10px;color:#111;font-weight:700}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-bottom:42px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));padding:28px;border-radius:18px;backdrop-filter:blur(6px);border:1px solid var(--glass-border)}
+    .hero-intro h2{margin:0;font-size:34px;line-height:1.02}
+    .typing{color:var(--muted);font-weight:600;margin-top:8px}
+    .hero-buttons{margin-top:18px;display:flex;gap:12px}
+    .btn{padding:10px 14px;border-radius:12px;display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-weight:700}
+    .btn-border{border:1px solid rgba(255,255,255,0.12)}
+
+    /* Profile card */
+    .profile{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+    .avatar{width:160px;height:160px;border-radius:22px;background:linear-gradient(135deg,#fff,#ffd56b);display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:800;color:#222;box-shadow:0 12px 30px rgba(0,0,0,0.12);transform:translateY(0);animation:float 4s ease-in-out infinite}
+    @keyframes float{0%{transform:translateY(0)}50%{transform:translateY(-10px)}100%{transform:translateY(0)}}
+
+    /* Sections */
+    section{margin-bottom:34px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+
+    /* Skills */
+    .skill{padding:14px;border-radius:12px;background:var(--card);min-height:120px;display:flex;flex-direction:column;gap:8px}
+    .skill h3{margin:0}
+    .meter{height:10px;background:linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-radius:999px;overflow:hidden}
+    .meter > span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#fff,#ffd56b);transform:scaleX(0);transform-origin:left;animation:meter-anim 1s ease forwards}
+    @keyframes meter-anim{to{transform:scaleX(var(--val))}}
+
+    /* Projects */
+    .project{border-radius:12px;padding:14px;background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));display:flex;flex-direction:column;gap:12px}
+    .project .thumb{height:120px;border-radius:10px;background:linear-gradient(135deg,#7afcff,#7ab3ff);display:flex;align-items:center;justify-content:center;font-weight:700;color:#083;}
+    .project .meta{display:flex;justify-content:space-between;align-items:center}
+
+
+    /* Contact */
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
+    form label{display:block;font-size:13px;margin-bottom:6px}
+    input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+    textarea{min-height:140px}
+
+    footer{opacity:0.85;padding:18px 0;text-align:center;font-size:14px;color:var(--muted)}
+
+    /* Small screens */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .grid-3{grid-template-columns:repeat(2,1fr)}
+      .contact-grid{grid-template-columns:1fr}
+      nav{display:none}
+    }
+    @media (max-width:560px){
+      .grid-3{grid-template-columns:1fr}
+      .avatar{width:120px;height:120px;font-size:36px}
+      .logo{width:44px;height:44px}
+    }
+
+    /* Subtle decorative animated blobs */
+    .blobs{position:fixed;right:-120px;top:-80px;pointer-events:none;z-index:0}
+    .blob{width:420px;height:420px;border-radius:40%;filter:blur(60px);opacity:0.85;mix-blend-mode:screen;animation:blob 10s infinite}
+    .blob.a{background:linear-gradient(45deg,#ff7eb3,#ffd56b);animation-delay:0s}
+    .blob.b{width:300px;height:300px;left:-120px;bottom:-120px;top:auto;right:auto;background:linear-gradient(45deg,#7afcff,#9b7aff);animation-delay:4s}
+    @keyframes blob{0%{transform:translate(0,0) scale(1)}33%{transform:translate(-30px,20px) scale(1.05)}66%{transform:translate(20px,-40px) scale(0.95)}100%{transform:translate(0,0) scale(1)}}
+
+    /* utilities */
+    .muted{color:var(--muted)}
+    .gap-8{gap:8px}
+    .center{display:flex;align-items:center;justify-content:center}
+
+    /* project modal */
+    .modal{position:fixed;inset:0;background:rgba(6,8,12,0.6);display:none;align-items:center;justify-content:center;padding:20px}
+    .modal.open{display:flex}
+    .modal-card{width:min(900px,96%);background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));border-radius:14px;padding:20px}
+
+  </style>
+</head>
+<body>
+
+  <div class="blobs">
+    <div class="blob a"></div>
+    <div class="blob b"></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">MA</div>
+        <div>
+          <h1>Monis Ahmed</h1>
+          <div class="muted">Web Developer • Frontend Enthusiast</div>
+        </div>
+      </div>
+
+      <nav>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a class="cta" href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="card hero-intro">
+          <h2>Hello — I build beautiful web experiences.</h2>
+          <div class="typing" id="typing">I make interactive websites and small web apps.</div>
+          <p class="muted" style="margin-top:12px">I'm a young developer learning, building, and sharing. I specialize in HTML, CSS and JavaScript and I enjoy colorful, animated UI.</p>
+
+          <div class="hero-buttons">
+            <a class="btn btn-border" href="#projects">View Projects →</a>
+            <a class="btn" href="#contact" style="background:linear-gradient(90deg,#7afcff,#7ab3ff)">Hire Me</a>
+          </div>
+
+          <div style="margin-top:18px;display:flex;gap:10px;align-items:center">
+            <div class="card" style="padding:10px 12px;border-radius:10px;display:inline-flex;gap:10px;align-items:center">
+              <strong>Location</strong>
+              <span class="muted">nawabshah, Pakistan</span>
+            </div>
+            <div class="card" style="padding:10px 12px;border-radius:10px;display:inline-flex;gap:10px;align-items:center">
+              <strong>Availability</strong>
+              <span class="muted">Open for internships</span>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card profile">
+          <div class="avatar">M</div>
+          <div>
+            <h3 style="margin:0">Monis Ahmed</h3>
+            <div class="muted">Frontend Developer</div>
+            <div style="margin-top:10px;display:flex;gap:8px;justify-content:center">
+              <a href="#" class="btn btn-border">Download CV</a>
+              <a href="#contact" class="btn" style="background:linear-gradient(90deg,#ffd56b,#ff7eb3)">Contact</a>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="about">
+        <div class="card">
+          <h2>About Me</h2>
+          <p class="muted">I am a passionate web developer focusing on crafting delightful user interfaces and small, useful web apps. I enjoy animations, gradients and turning designs into working code.</p>
+          <div style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+            <div class="card" style="padding:10px 12px;border-radius:10px">Studying Web Development</div>
+            <div class="card" style="padding:10px 12px;border-radius:10px">Loves Clean Code</div>
+            <div class="card" style="padding:10px 12px;border-radius:10px">Open to Learn</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills">
+        <h2 style="margin-bottom:12px">Skills</h2>
+        <div class="grid-3">
+          <div class="skill">
+            <h3>HTML & CSS</h3>
+            <div class="muted">Semantic markup, responsive layouts, animations</div>
+            <div class="meter" style="margin-top:auto"><span style="--val:0.95"></span></div>
+          </div>
+          <div class="skill">
+            <h3>JavaScript</h3>
+            <div class="muted">DOM, events, fetch, small libraries</div>
+            <div class="meter" style="margin-top:auto"><span style="--val:0.85"></span></div>
+          </div>
+          <div class="skill">
+            <h3>UI Design</h3>
+            <div class="muted">Color theory, micro-interactions</div>
+            <div class="meter" style="margin-top:auto"><span style="--val:0.8"></span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects">
+        <h2 style="margin-bottom:12px">Projects</h2>
+        <div class="grid-3">
+          <div class="project">
+            <div class="thumb">Calculator</div>
+            <div>
+              <h4 style="margin:0">Simple Calculator</h4>
+              <div class="meta">
+                <div class="muted">JS • CSS</div>
+                <button class="btn btn-border" data-project='{"title":"Calculator","desc":"A simple calculator built with HTML/CSS/JS.","demo":"#"}'>Preview</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div class="thumb">Todo</div>
+            <div>
+              <h4 style="margin:0">Todo App</h4>
+              <div class="meta">
+                <div class="muted">LocalStorage • JS</div>
+                <button class="btn btn-border" data-project='{"title":"Todo App","desc":"A todo list with localStorage and filtering.","demo":"#"}'>Preview</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="project">
+            <div class="thumb">Portfolio</div>
+            <div>
+              <h4 style="margin:0">This Portfolio</h4>
+              <div class="meta">
+                <div class="muted">HTML • CSS • JS</div>
+                <button class="btn btn-border" data-project='{"title":"Portfolio","desc":"The colorful animated portfolio template.","demo":"#"}'>Preview</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact">
+        <h2 style="margin-bottom:12px">Contact</h2>
+        <div class="card contact-grid">
+          <div>
+            <p class="muted">Want to work together or need help with a web project? Send a message — I'll respond soon (simulate in this demo).</p>
+            <form id="contactForm">
+              <label for="name">Name</label>
+              <input id="name" required placeholder="Monis Ahmed" />
+
+              <label for="email" style="margin-top:8px">Email</label>
+              <input id="email" type="email" required placeholder="monisarain786@gmail.com" />
+
+              <label for="message" style="margin-top:8px">Message</label>
+              <textarea id="message" placeholder="Describe your project or question"></textarea>
+
+              <div style="margin-top:12px;display:flex;gap:8px">
+                <button type="submit" class="btn" style="background:linear-gradient(90deg,#7afcff,#7ab3ff)">Send Message</button>
+                <button type="button" id="clearBtn" class="btn btn-border">Clear</button>
+              </div>
+
+              <div id="formStatus" style="margin-top:10px;color:var(--muted)"></div>
+            </form>
+          </div>
+
+          <aside style="padding:10px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02))">
+            <h4 style="margin-top:0">Contact Info</h4>
+            <p class="muted" style="margin-bottom:6px">Email: <strong>Monisarain786@gmail.com</strong></p>
+            <p class="muted">Location: Nawabshah, Pakistan</p>
+
+            <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+              <a href="#" class="btn btn-border">LinkedIn</a>
+              <a href="#" class="btn btn-border">GitHub</a>
+              <a href="#" class="btn btn-border">Twitter</a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <footer>
+        Built with ❤ by Monis • &copy; <span id="year"></span>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- Project modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card card">
+      <button id="closeModal" class="btn btn-border" style="float:right">Close</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // YEAR
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple typing effect
+    (function(){
+      const el = document.getElementById('typing');
+      const phrases = ['I make interactive websites and small web apps.','I love CSS animations and gradients.','I turn ideas into code.'];
+      let p=0,i=0,dir=1;
+      function tick(){
+        const str = phrases[p];
+        el.textContent = str.slice(0,i);
+        i += dir;
+        if(i>str.length){dir=-1;i=str.length;setTimeout(tick,1000);return}
+        if(i<0){dir=1;i=0;p=(p+1)%phrases.length}
+        setTimeout(tick,40);
+      }
+      tick();
+    })();
+
+    // Project modal preview
+    document.querySelectorAll('[data-project]').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const data = JSON.parse(btn.getAttribute('data-project'));
+        const content = <h3>${data.title}</h3><p class=\"muted\">${data.desc}</p><p style=\"margin-top:12px\"><a href=\"${data.demo}\" class=\"btn\">Open Demo</a></p>;
+        document.getElementById('modalContent').innerHTML = content;
+        document.getElementById('modal').classList.add('open');
+      })
+    })
+    document.getElementById('closeModal').addEventListener('click',()=>document.getElementById('modal').classList.remove('open'));
+    document.getElementById('modal').addEventListener('click',(e)=>{if(e.target.id==='modal')document.getElementById('modal').classList.remove('open')});
+
+    // Form handling (simulate sending)
+    const form = document.getElementById('contactForm');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const status = document.getElementById('formStatus');
+      if(!name || !email){status.textContent='Please enter name and email.';return}
+      status.textContent = 'Sending...';
+      setTimeout(()=>{status.textContent = 'Message sent! (simulated) — I will reply soon.';form.reset()},800);
+    });
+    document.getElementById('clearBtn').addEventListener('click',()=>{form.reset();document.getElementById('formStatus').textContent='Cleared.'});
+
+    // Animate skill meters on scroll
+    function revealMeters(){
+      document.querySelectorAll('.meter span').forEach(s=>{
+        const rect = s.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 60){ s.style.animationPlayState = 'running'; }
+      })
+    }
+    window.addEventListener('scroll',revealMeters);revealMeters();
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const href = a.getAttribute('href');
+        if(href.startsWith('#')){
+          e.preventDefault();
+          document.querySelector(href).scrollIntoView({behavior:'smooth',block:'start'});
+        }
+      })
+    })
+  </script>
+
+</body>
+</html>
+
